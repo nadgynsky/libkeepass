@@ -2,6 +2,7 @@
 
 # Variables to set through command line.
 DEBUG ?= YES
+ADD_CCFLAGS ?=
 
 # General configuration.
 OUT_DIR_DEBUG := build/debug
@@ -14,10 +15,12 @@ ifeq ($(DEBUG),YES)
   CCFLAGS += -g -DDEBUG
 endif
 
+CCFLAGS += $(ADD_CCFLAGS)
+
 # Library.
 LIBKEEPASS_SRC := $(wildcard src/*.cc)
 LIBKEEPASS_OBJ := $(addprefix $(OBJ_DIR)/,$(notdir $(LIBKEEPASS_SRC:.cc=.o)))
-LIBKEEPASS_CCFLAGS := $(CCFLAGS) -std=c++11 -Wall -Wextra -Werror
+LIBKEEPASS_CCFLAGS := $(CCFLAGS) -std=c++11 -Wall -Wextra
 
 $(OBJ_DIR)/%.o: src/%.cc
 	mkdir -p $(@D)
